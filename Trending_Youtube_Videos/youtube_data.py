@@ -58,7 +58,7 @@ class TrendingVideos():
             category.append(cat)
         return pd.DataFrame(category)
 #call once and save the category details in a file to use it in filter
-#video = TrendingVideos()
+#video = TrendingVideos(category,location)
 #category= video.get_category()
 #category.to_csv('category.csv',index=False)
 
