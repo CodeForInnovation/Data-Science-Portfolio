@@ -1,4 +1,4 @@
-Home loan approval prediction using Machine Learning.
+Home loan approval prediction using Machine Learning in a streamlit web application and storing the prediction data in Google BigQuery for doing approval analysis.
 
 Dataset: https://www.kaggle.com/datasets/rishikeshkonapure/home-loan-approval
 
