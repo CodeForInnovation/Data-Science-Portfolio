@@ -5,7 +5,7 @@ import os
 
 class TrendingVideos():
     def __init__(self,cat):
-        self.api_key = 'AIzaSyCuoS7-e908mb7TvjEGpXStWTp8psIn5Xg'
+        self.api_key = os.getenv('API_KEY')
         self.api_service_name = 'youtube'
         self.api_version = 'v3'
         self.cat = cat
