@@ -1,20 +1,15 @@
 from googleapiclient.discovery import build
 import pandas as pd
-import api
+import os
 
 
 class TrendingVideos():
-    def __init__(self,category,location):
-        self.api_key = api.api_key
+    def __init__(self,cat):
+        self.api_key = 'AIzaSyCuoS7-e908mb7TvjEGpXStWTp8psIn5Xg'
         self.api_service_name = 'youtube'
         self.api_version = 'v3'
-        self.cat = category
-        #Let's map some of ISO 3166-1 alpha-2 country code with country names to use in the web app
-        self.location = location
-        try:
-            self.youtube = build(self.api_service_name, self.api_version, developerKey=self.api_key)
-        except:
-            print('Error! Anuthentication failed')
+        self.cat = cat
+        self.youtube = build(self.api_service_name, self.api_version, developerKey=self.api_key)
 
      #function to call the api and retrive the trending video details based on the region code
     def get_video(self,region):
@@ -36,7 +31,7 @@ class TrendingVideos():
               comments = int(item['statistics']['commentCount']),
               region = 'Global' if region is None else region,
               category_id = int(item['snippet']['categoryId']),
-              category = self.cat.loc[int(item['snippet']['categoryId'])]['title'],
+              category = self.cat.loc[int(item['snippet']['categoryId'])],
               date = item['snippet']['publishedAt'],
               thumbnail = item['snippet']['thumbnails']['high']['url'],
               url = f"https://www.youtube.com/watch?v={item['id']}",
@@ -57,9 +52,6 @@ class TrendingVideos():
             cat = dict(id=item['id'],title = item['snippet']['title'])
             category.append(cat)
         return pd.DataFrame(category)
-#call once and save the category details in a file to use it in filter
-#video = TrendingVideos(category,location)
-#category= video.get_category()
-#category.to_csv('category.csv',index=False)
+
 
 

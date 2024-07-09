@@ -5,20 +5,22 @@ from youtube_data import TrendingVideos
 
 
 
-#Caching the api data to avoid making api calls everytime user interacts with the app
-@st.cache
-def fetch_get_video(region_code,cat,location):
-    video = TrendingVideos(cat,location)
+#Using cache data to avoid calling the api multiple times in a session
+@st.cache_data
+def fetch_get_video(region_code,cat):
+    video = TrendingVideos(cat)
     return video.get_video(region_code)
 
-@st.cache
+#Using cache resource to save the data permanently after building app
+@st.cache_resource
 def get_cat():
     cat =pd.read_csv('category.csv',index_col ='id')
     return cat
 
 cat = get_cat()
 
-@st.cache
+#Let's map some of ISO 3166-1 alpha-2 country code with country names to use in the web app
+@st.cache_resource
 def get_location():
     return pd.Series(data=['INDIA','USA','CANADA','AUSTRALIA','SOUTH AFRICA'],
                               index =['IN','US','CA','AU','ZA'])
@@ -41,7 +43,7 @@ category_filter = st.sidebar.multiselect('Filter by Category',cat['title'].tolis
 sort_by = (st.sidebar.radio('Sort by',['Trend','Date','Likes','Views']))
 
 #fetching the trending videos based on region code and to get the global trend, we need to pass None
-trending_videos = fetch_get_video(location.index[location == region][0] if region != 'Global' else None,cat,location)
+trending_videos = fetch_get_video(location.index[location == region][0] if region != 'Global' else None,cat)
 
 
 filter_videos = trending_videos.copy()
