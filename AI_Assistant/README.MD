@@ -1,4 +1,4 @@
-##Personal AI Assistant
+# Personal AI Assistant
 
 A ChatGPT like AI Assistant created using Google's Gemini 1.5 pro and streamlit.
 
